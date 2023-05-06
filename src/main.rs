@@ -26,6 +26,24 @@
 //     return Json(result);
 // }
 
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+
+impl Color {
+    fn is_green(&self) -> bool {
+        // if let Color::Green = self {
+        //     return true;
+        // }
+
+        // return false;
+
+        return matches!(&self, Color::Green);
+    }
+}
+
 fn main() {
     let new_vec = vec![1, 2, 3].iter().map(|x| x + 1).collect::<Vec<_>>();
     println!("{:?}", new_vec);
@@ -40,4 +58,9 @@ fn main() {
         .collect();
 
     println!("{:?}", new_vec_3);
+
+    let car_1_color = Color::Green;
+    let car_2_color = Color::Red;
+    println!("Is car 1 green? {}", car_1_color.is_green());
+    println!("Is car 2 green? {}", car_2_color.is_green());
 }
