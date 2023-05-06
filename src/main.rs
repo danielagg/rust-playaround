@@ -44,6 +44,26 @@ impl Color {
     }
 }
 
+struct Custom {
+    age: usize,
+    name: String,
+}
+
+enum Entry {
+    Number(usize),
+    String(String),
+    MyCustom(Custom),
+}
+
+fn append(entries: &mut Vec<Entry>) {
+    entries.push(Entry::String(String::from("test")));
+    entries.push(Entry::Number(2));
+    entries.push(Entry::MyCustom(Custom {
+        age: 25,
+        name: String::from("John"),
+    }))
+}
+
 fn main() {
     let new_vec = vec![1, 2, 3].iter().map(|x| x + 1).collect::<Vec<_>>();
     println!("{:?}", new_vec);
