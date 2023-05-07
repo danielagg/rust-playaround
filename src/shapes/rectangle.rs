@@ -1,12 +1,19 @@
 use std::fmt::Display;
 
 use super::area::Area;
+use super::collision::Collidable;
 
 pub struct Rectangle {
     pub x: f64,
     pub y: f64,
     pub width: f64,
     pub height: f64,
+}
+
+impl Rectangle {
+    pub fn contains_point(&self, (x, y): (f64, f64)) -> bool {
+        return self.x <= x && self.x + self.width >= x && self.y <= y && self.y + self.height >= y;
+    }
 }
 
 impl Default for Rectangle {
@@ -56,7 +63,7 @@ impl Iterator for RectangleIterator {
     }
 }
 
-impl IntoIterator for Rectangle {
+impl IntoIterator for &Rectangle {
     type Item = (f64, f64);
     type IntoIter = RectangleIterator;
 
@@ -72,5 +79,17 @@ impl IntoIterator for Rectangle {
             points: points,
             index: 0,
         };
+    }
+}
+
+impl Collidable<Rectangle> for Rectangle {
+    fn collide(&self, other: &Rectangle) -> bool {
+        for point in other {
+            if other.contains_point(point) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
