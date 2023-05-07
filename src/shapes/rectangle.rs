@@ -1,5 +1,7 @@
 use std::fmt::Display;
 
+use super::area::Area;
+
 pub struct Rectangle {
     pub x: f64,
     pub y: f64,
@@ -25,5 +27,11 @@ impl Display for Rectangle {
             "Rectangle (on points {}, {}), with the width*height of: {}*{}",
             self.x, self.y, self.width, self.height
         );
+    }
+}
+
+impl Area for Rectangle {
+    fn get_area(&self) -> f64 {
+        return self.width * self.height;
     }
 }

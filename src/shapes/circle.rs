@@ -1,4 +1,7 @@
+use std::f64::consts::PI;
 use std::fmt::Display;
+
+use super::area::Area;
 
 pub struct Circle {
     pub x: f64,
@@ -23,5 +26,11 @@ impl Display for Circle {
             "Circle (on points {}, {}), with the radius of: {}",
             self.x, self.y, self.radius
         );
+    }
+}
+
+impl Area for Circle {
+    fn get_area(&self) -> f64 {
+        return self.radius * self.radius * PI;
     }
 }
