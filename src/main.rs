@@ -1,4 +1,4 @@
-use shapes::{circle::Circle, rectangle::Rectangle};
+use shapes::{area::Area, circle::Circle, rectangle::Rectangle};
 
 mod shapes;
 
@@ -8,4 +8,7 @@ fn main() {
 
     println!("{}", rect_1);
     println!("{}", circle_1);
+
+    let my_float: f64 = 6.0;
+    println!("{}", my_float.get_area());
 }
