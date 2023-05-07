@@ -2,8 +2,7 @@ use std::f64::consts::PI;
 use std::fmt::Display;
 
 use super::area::Area;
-use super::collision::Collidable;
-use super::rectangle::Rectangle;
+use super::collision::{Contains, PointIter, Points};
 
 pub struct Circle {
     pub x: f64,
@@ -11,12 +10,18 @@ pub struct Circle {
     pub radius: f64,
 }
 
-impl Circle {
-    pub fn contains_point(&self, (x, y): (f64, f64)) -> bool {
+impl Contains for Circle {
+    fn contains_point(&self, (x, y): (f64, f64)) -> bool {
         let dx = self.x - x;
         let dy = self.y - y;
 
         return dx * dx + dy * dy <= self.radius * self.radius;
+    }
+}
+
+impl Points for Circle {
+    fn points(&self) -> PointIter {
+        return vec![(self.x, self.y)].into();
     }
 }
 
@@ -43,23 +48,5 @@ impl Display for Circle {
 impl Area for Circle {
     fn get_area(&self) -> f64 {
         return self.radius * self.radius * PI;
-    }
-}
-
-impl Collidable<Circle> for Circle {
-    fn collide(&self, other: &Circle) -> bool {
-        return self.contains_point((other.x, other.y));
-    }
-}
-
-impl Collidable<Rectangle> for Circle {
-    fn collide(&self, other: &Rectangle) -> bool {
-        for point in other {
-            if other.contains_point(point) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
