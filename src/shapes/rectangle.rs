@@ -1,6 +1,7 @@
 use std::fmt::Display;
 
 use super::area::Area;
+use super::circle::Circle;
 use super::collision::Collidable;
 
 pub struct Rectangle {
@@ -91,5 +92,11 @@ impl Collidable<Rectangle> for Rectangle {
         }
 
         return false;
+    }
+}
+
+impl Collidable<Circle> for Rectangle {
+    fn collide(&self, other: &Circle) -> bool {
+        return self.contains_point((other.x, other.y));
     }
 }

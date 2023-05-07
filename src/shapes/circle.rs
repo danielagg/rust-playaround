@@ -46,8 +46,20 @@ impl Area for Circle {
     }
 }
 
-impl Collidable<Circle> for Rectangle {
+impl Collidable<Circle> for Circle {
     fn collide(&self, other: &Circle) -> bool {
         return self.contains_point((other.x, other.y));
+    }
+}
+
+impl Collidable<Rectangle> for Circle {
+    fn collide(&self, other: &Rectangle) -> bool {
+        for point in other {
+            if other.contains_point(point) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
