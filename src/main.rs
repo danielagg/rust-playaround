@@ -1,25 +1,18 @@
-use shapes::{area::Area, circle::Circle, rectangle::Rectangle};
+use actix_web::{web, App, HttpRequest, HttpServer, Responder};
 
-use crate::shapes::collision::Collidable;
+async fn greet(req: HttpRequest) -> impl Responder {
+    let name = req.match_info().get("name").unwrap_or("World");
+    format!("Hello {}!", &name)
+}
 
-mod shapes;
-
-fn main() {
-    let rect_1 = Rectangle::default();
-    let rect_2 = Rectangle::default();
-    let circle_1 = Circle::default();
-    let circle_2 = Circle::default();
-
-    println!("{}", rect_1);
-    println!("{}", rect_2);
-    println!("{}", circle_1);
-    println!("{}", circle_2);
-
-    println!("{}", rect_1.collide(&rect_2));
-    println!("{}", rect_2.collide(&circle_1));
-    println!("{}", circle_1.collide(&circle_2));
-    println!("{}", circle_2.collide(&rect_1));
-
-    let my_float: f64 = 6.0;
-    println!("{}", my_float.get_area());
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(greet))
+            .route("/{name}", web::get().to(greet))
+    })
+    .bind("127.0.0.1:8000")?
+    .run()
+    .await
 }
